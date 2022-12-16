@@ -12,6 +12,10 @@ public abstract class Weapon extends Item{
         return damage;
     }
 
+    public void setDamage(int val){
+        this.damage += val;
+    }
+
     public int getManaCost(){
         return 0;
     }

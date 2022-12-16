@@ -168,7 +168,6 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         int numPotion = scanner.nextInt();
         if(numPotion >= 0 && numPotion < items.size()){
-            // Faire un test pour savoir si le hero a le droit de prendre la potion
             items.get(numPotion).applyEffect(h);
             items.remove(numPotion);
         }
@@ -211,6 +210,7 @@ public class Game {
             enemies.remove(cmbt);
             inputParser.display(cmbt.getName() + " est mort.");
             // Récupérer les loots
+            ((Hero) c).chooseLoot();
         }
     }
 

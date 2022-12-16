@@ -1,11 +1,18 @@
 package com.isep.rpg;
 
+import com.isep.rpg.loot.AddMana;
+
+import java.util.List;
+
 public abstract class SpellCaster extends Hero{
     private int manaPoints;
+    private List<Loot> lootsSpell;
 
     public SpellCaster(int lP, int armor, int mP, String name, Weapon wpn){
         super(lP, armor, name, wpn);
         this.manaPoints = mP;
+        this.lootsSpell = super.getLoots();
+        lootsSpell.add(new AddMana());
     }
 
     private boolean fightManaPoints(){

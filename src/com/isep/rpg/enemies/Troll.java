@@ -10,8 +10,4 @@ public class Troll extends Enemy {
         super(10, 10, "Troll", new SledgeHammer());
     }
 
-    /*@Override
-    public void attack(Combatant fighter, int damage) {
-        //fighter.setHealthPoints(-7);
-    }*/
 }
