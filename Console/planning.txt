@@ -1,0 +1,19 @@
+TP noté à faire avant Noël
+
+Sprint 1 : Demander le nombre de Héros et initialiser le nombre d'ennemis en fonction
+Sprint 2 : Implémenter le choix entre attaque et défense et le déroulé du jeu--> Développer les fonctionnalités associées
+Sprint 3 : Implémenter les potions, nourritures
+Sprint 4 : Implémenter le choix des récompenses en fin de combat
+Sprint 5 : interface graphique
+
+// Améliorations possibles :
+- Ne pas sauter le tour du héros lorsqu'il prend une mauvaise potion
+- Rendre aléatoire le nombre de Pv ou de mana rendu pour les potions
+
+
+
+// A faire :
+
+Limiter le nombre de héros possible
+Afficher un message de GameOver avec le nombre de vagues atteintes
+Faire en sorte que les ennemis deviennent plus forts au fil des vagues
