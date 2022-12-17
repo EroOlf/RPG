@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.rpggraphic.Controllers.ChooseHeroesController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <Label fx:id="choiceText" text="Choose the class of your heroes"/>
+    <Label fx:id="errorText" text=""/>
+    <Label fx:id="warriorText" text="Warrior"/>
+    <Slider fx:id="warriorSlider"/>
+    <Label fx:id="mageText" text="Mage"/>
+    <Slider fx:id="mageSlider"/>
+    <Label fx:id="hunterText" text="Hunter"/>
+    <Slider fx:id="hunterSlider"/>
+    <Label fx:id="healerText" text="Healer"/>
+    <Slider fx:id="healerSlider"/>
+    <Button text="OK" onAction="#onStartButtonClick"/>
+
+</VBox>
