@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class Hero extends Combatant{
-
-    //Pour l'instant que des potions
     private List<Item> items;
 
     private List<Loot> loots;
@@ -27,14 +25,6 @@ public abstract class Hero extends Combatant{
 
     public List<Loot> getLoots(){
         return loots;
-    }
-
-    private void defend(){
-
-    }
-
-    public void useConsumable(Consumable consumable){
-
     }
 
     public List<Item> getItems(){
@@ -86,7 +76,4 @@ public abstract class Hero extends Combatant{
         System.out.println("Le hero ne possede pas de mana");
     }
 
-
-
-    // Les items ne sont pas en attributs mais une méthode va les utiliser
 }

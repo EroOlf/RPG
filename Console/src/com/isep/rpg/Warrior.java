@@ -10,8 +10,4 @@ public class Warrior extends Hero{
         super(lifePoint, armor, "Warrior", new Sword());
     }
 
-    /*@Override
-    public void attack(Combatant fighter, int dmg) {
-
-    }*/
 }

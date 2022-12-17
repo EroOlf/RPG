@@ -1,4 +1,5 @@
 package com.isep.test;
+import com.isep.rpg.Game;
 import org.junit.jupiter.api.Test;
 
 
@@ -9,12 +10,12 @@ public class TestGame {
 
     @Test
     public void testInit(){
+        Game g = new Game();
         initEnemies(21);
         assertEquals(getEnemies().size(), 27);
-        initItems(12);
-        assertEquals(getItems().size(), 12*2);
-        //assertTrue();
-        //assertEquals(10, 50);
+        g.initItems(12);
+        assertEquals(g.getItems().size(), 12*2);
+
     }
 
 }

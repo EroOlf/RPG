@@ -1,6 +1,5 @@
 package com.isep.rpg.enemies;
 
-import com.isep.rpg.Combatant;
 import com.isep.rpg.Enemy;
 import com.isep.rpg.weapons.SledgeHammer;
 

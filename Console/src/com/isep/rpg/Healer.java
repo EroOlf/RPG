@@ -12,15 +12,6 @@ public class Healer extends SpellCaster{
         super(lifePoints, armor, manaPoints, "Healer", new Stick());
     }
 
-    /*@Override
-    public void attack(Combatant hero, int heal){
-        // Récupérer un héro
-        hero.setHealthPoints(this.getWpn().getDamage());
-
-        // Lui ajouter de la vie
-        // Réduire le mana
-    }*/
-
     @Override
     public boolean isHealer(){
         return true;

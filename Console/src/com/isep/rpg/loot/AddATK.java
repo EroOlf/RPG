@@ -2,7 +2,7 @@ package com.isep.rpg.loot;
 
 import com.isep.rpg.Hero;
 import com.isep.rpg.Loot;
-import com.isep.rpg.SpellCaster;
+
 
 import static java.lang.Math.abs;
 

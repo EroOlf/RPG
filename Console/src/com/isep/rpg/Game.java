@@ -3,7 +3,6 @@ package com.isep.rpg;
 import com.isep.rpg.enemies.Dragon;
 import com.isep.rpg.enemies.Leprechauns;
 import com.isep.rpg.enemies.Troll;
-import com.isep.utils.InputParser;
 
 import java.util.*;
 
@@ -11,20 +10,21 @@ public class Game {
     private static List<Hero> heroes;
     private static List<Enemy> enemies = new ArrayList<>();
     private static int enemiesWave = 1;
-    private static List<Consumable> items = new ArrayList<>();
-    private InputParser inputParser;
+    private  List<Consumable> items = new ArrayList<>();
+
+    private int cptDeadEnemies = 0;
 
 
 
-    public Game(InputParser iP){
-        this.inputParser = iP;
+    public Game(){
+
     }
 
     public static List<Enemy> getEnemies(){
         return enemies;
     }
 
-    public static List<Consumable> getItems(){
+    public  List<Consumable> getItems(){
         return items;
     }
 
@@ -32,17 +32,16 @@ public class Game {
      * @brief : Méthode gérant la vie du jeu
      */
     public void playGame(){
-        inputParser.display("Bienvenue sur Mini RPG Lite 3000 !\n Choisissez le nombre de heros que vous voulez : ");
+        System.out.println("Bienvenue sur Mini RPG Lite 3000 !\n Choisissez le nombre de heros que vous voulez : ");
         int nbHeroes = collectnbHeroes();
-        inputParser.display("Choisissez les classes de vos " + nbHeroes + " heros parmi celles-ci :\n1.Hunter\n2.Mage\n3.Warrior\n4.Healer");
+        System.out.println("Choisissez les classes de vos " + nbHeroes + " heros parmi celles-ci :\n1.Hunter\n2.Mage\n3.Warrior\n4.Healer");
         initHeroes(nbHeroes);
         initEnemies(nbHeroes);
         initItems(nbHeroes);
         while(!isGameOver()){
-            // Générer le play turn
             generatePlayTurn();
         }
-        System.out.println("Malheureusement, tous les heros sont morts au combat");
+        System.out.println("Malheureusement, tous les heros sont morts au combat\nDerniere vague : " + enemiesWave + "\nNombre d'ennemis vaincus : " + cptDeadEnemies);
     }
 
 
@@ -63,7 +62,7 @@ public class Game {
                     throw new IllegalArgumentException();
                 }
             }catch(IllegalArgumentException e){
-                inputParser.display("Ce nombre est invalide, re-essayez : ");
+                System.out.println("Ce nombre est invalide, re-essayez : ");
             }
 
         }while(!nbValid);
@@ -97,7 +96,7 @@ public class Game {
                     items.add(new Potion());
                     break;
                 default:
-                    inputParser.display("Cette option n'est pas valide, réessayez : ");
+                    System.out.println("Cette option n'est pas valide, réessayez : ");
                     initHeroes(nbHeroes);
             }
         }
@@ -122,17 +121,17 @@ public class Game {
     }
 
     /**
-     * Initailisation des Items
+     * @brief : Initialisation des Items
      * @param nbHeroes : Nombre de héros qui ont été initialisés
      */
-    public static void initItems(int nbHeroes){
+    public void initItems(int nbHeroes){
         for(int i = 0; i < nbHeroes*2; i++){
             items.add(new Food());
         }
     }
 
     /**
-     * Détermine si le jeu est fini ou non
+     * @brief : Détermine si le jeu est fini ou non
      * @return true si le jeu est fini, false sinon
      */
     private static boolean isGameOver(){
@@ -143,8 +142,13 @@ public class Game {
 
     }
 
+    /**
+     * @brief : Récupération de l'input de l'utilisateur pour le choix entre attaquer et prendre une potion
+     * @param cmbt : Combattant devant choisir de prendre une potion ou d'attaquer
+     * @return false, si l'utilisateur choisi d'attaquer et true s'il prend une potion
+     */
     private boolean attackOrPotion(Combatant cmbt){
-        inputParser.display("Le " + cmbt.getName() + " doit-il attaquer ou prendre une potion ?\n1 : Attack \n2: Potion");
+        System.out.println("Le " + cmbt.getName() + " doit-il attaquer ou prendre une potion ?\n1 : Attack \n2: Potion");
         Scanner scanner = new Scanner(System.in);
         switch(scanner.next()){
             case "ATTACK","Attack","attack","1":
@@ -152,18 +156,21 @@ public class Game {
 
             case "POTION","Potion","potion","2":
                 return true;
-
             default:
-                inputParser.display("Ce n'est pas une option");
-                inputParser.display("Veuillez saisir les bons parametres d entree");
+                System.out.println("Ce n'est pas une option");
+                System.out.println("Veuillez saisir les bons parametres d entree");
                 attackOrPotion(cmbt);
         }
         return false;
     }
 
+    /**
+     * @brief : Récupère l'input de l'utilisateur concernant le choix de la potion et applique son effet sur le héro passé en paramètre
+     * @param h : le héro sur lequel l'effet de la potion va s'appliquer
+     */
     private void chooseConsumable(Hero h){
         for(int i = 0; i < items.size(); ++i){
-            inputParser.display(i + ") " + items.get(i).getName());
+            System.out.println(i + ") " + items.get(i).getName());
         }
         Scanner scanner = new Scanner(System.in);
         int numPotion = scanner.nextInt();
@@ -174,6 +181,9 @@ public class Game {
     }
 
 
+    /**
+     * @brief : Génère l'ordre d'attaque des combattants et les vagues d'ennemis
+     */
     private void generatePlayTurn(){
         List<Combatant> players = new ArrayList<>();
         for(Hero h : heroes){
@@ -186,10 +196,10 @@ public class Game {
         Collections.shuffle(players);
         fight(players);
         if(enemies.size() == 0){
-            inputParser.display("---------- Vague " + (enemiesWave + 1) + " ----------");
+            System.out.println("---------- Vague " + (enemiesWave + 1) + " ----------");
             enemiesWave++;
             if(enemiesWave%5 == 0 ){
-                inputParser.display("WARNING LE BOSS ARRIVE");
+                System.out.println("WARNING LE BOSS ARRIVE");
                 enemies.add(new Dragon());
             }else{
                 initEnemies(heroes.size());
@@ -197,7 +207,10 @@ public class Game {
         }
     }
 
-    //Récupération des loots
+    /**
+     * @brief : Gère l'attaque d'un combattant
+     * @param c : le combattant attaquant
+     */
     private void attack(Combatant c){
         Combatant cmbt;
         if(((Hero)c).isSpellCaster() && ((SpellCaster) c).isHealer()){
@@ -208,16 +221,17 @@ public class Game {
         c.attack(cmbt, c.getWpn().getDamage());
         if(cmbt.getHealthPoints() == 0){
             enemies.remove(cmbt);
-            inputParser.display(cmbt.getName() + " est mort.");
-            // Récupérer les loots
+            cptDeadEnemies++;
+            System.out.println(cmbt.getName() + " est mort.");
             ((Hero) c).chooseLoot();
         }
     }
 
-    private void getLoot(){
 
-    }
-
+    /**
+     * @brief : Gère le choix du combattant
+     * @param players : Liste des combattants ayant été mélangés
+     */
     private void fight(List<Combatant> players){
         for(Combatant p : players){
             if(p.isHero()){
@@ -228,7 +242,7 @@ public class Game {
                     } else{
                         // Attaquer
                         if(items.size() == 0){
-                            inputParser.display("Il n'y a plus de potion");
+                            System.out.println("Il n'y a plus de potion");
                         }
                         attack(p);
                     }
@@ -241,18 +255,23 @@ public class Game {
 
                     if(cmbt.getHealthPoints() == 0){
                         heroes.remove(cmbt);
-                        inputParser.display("Votre hero " + cmbt.getName() + " est mort, paix a son ame...");
+                        System.out.println("Votre hero " + cmbt.getName() + " est mort, paix a son ame...");
                     }
                 }
             }
         }
     }
 
+    /**
+     * @brief : Choix de l'utilisateur de l'ennemi à attaquer
+     * @param hero : Le Hero qui va attaquer un ennemi
+     * @return l'ennemi sélectionné
+     */
     private Combatant enemyChoicePlayer(Combatant hero){
-        inputParser.display("C'est le tour de " + hero.getName() + ". Qui voulez vous attaquer ?");
+        System.out.println("C'est le tour de " + hero.getName() + ". Qui voulez vous attaquer ?");
         int cpt = 0;
         for(Combatant e : enemies){
-            inputParser.display(cpt + ") " + e.getName() + " avec " + e.getHealthPoints() + " points de vie.");
+            System.out.println(cpt + ") " + e.getName() + " avec " + e.getHealthPoints() + " points de vie.");
             cpt++;
         }
         Scanner scanner = new Scanner(System.in);
@@ -262,7 +281,7 @@ public class Game {
             num = scanner.nextInt();
             if(num > enemies.size() - 1 || num < 0){
                 valid = false;
-                inputParser.display("La valeur entree ne corrrespond pas a un numero d'ennemi");
+                System.out.println("La valeur entree ne corrrespond pas a un numero d'ennemi");
             }
             else {
                 valid = true;
@@ -271,12 +290,15 @@ public class Game {
         return enemies.get(num);
     }
 
-
+    /**
+     * @brief : Choix du Healer du Hero à soigner
+     * @return le Hero qui sera soigné
+     */
     private Combatant healerChoiceHero(){
-        inputParser.display("C'est le tour du Healer. Qui voulez-vous soigner ?");
+        System.out.println("C'est le tour du Healer. Qui voulez-vous soigner ?");
         int cpt = 0;
         for(Hero h : heroes){
-            inputParser.display(cpt + ") " + h.getName() + " avec " + h.getHealthPoints() + " points de vie.");
+            System.out.println(cpt + ") " + h.getName() + " avec " + h.getHealthPoints() + " points de vie.");
             cpt++;
         }
         Scanner scanner = new Scanner(System.in);
@@ -286,7 +308,7 @@ public class Game {
             num = scanner.nextInt();
             if(num > heroes.size() - 1 || num < 0){
                 valid = false;
-                inputParser.display("La valeur entree ne corrrespond pas a un numero de hero");
+                System.out.println("La valeur entree ne corrrespond pas a un numero de hero");
             }
             else {
                 valid = true;
@@ -295,6 +317,10 @@ public class Game {
         return heroes.get(num);
     }
 
+    /**
+     * @brief Choix de l'ennemi du Hero à attaquer
+     * @return Le Hero qui sera attaqué par l'ennemi
+     */
     private static Combatant enemyChoiceComputer(){
         Random rd = new Random();
         return heroes.get(rd.nextInt(heroes.size()));
