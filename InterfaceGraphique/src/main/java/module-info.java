@@ -5,6 +5,7 @@ module com.example.rpggraphic {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
+    requires javafx.media;
 
     opens com.example.rpggraphic to javafx.fxml;
     exports com.example.rpggraphic;

@@ -4,11 +4,16 @@ import com.example.rpggraphic.HelloApplication;
 import com.example.rpggraphic.rpg.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import java.io.File;
+import javafx.scene.media.*;
+import javafx.scene.paint.Color;
+
 
 import java.io.IOException;
 
@@ -54,7 +59,13 @@ public class HelloController {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        Background backGround = new Background(bImg);
-        //root.setBackGround(backGround);
+        Background backGround = new Background(new BackgroundFill(Color.rgb(80, 10, 50), CornerRadii.EMPTY, Insets.EMPTY));
+        root.setBackground(backGround);
+
+        Media media = new Media(String.valueOf(HelloApplication.class.getResource("DungeonMusic.mp3"))); //replace /Movies/test.mp3 with your file
+        MediaPlayer player = new MediaPlayer(media);
+        player.setAutoPlay(true);
+        player.setVolume(0.75);   // from 0 to 1
+        player.play();
     }
 }
